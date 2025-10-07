@@ -1,2 +1,2 @@
 # ConectaPeru
-PWA informativa y de utilidad
+PWA informativa y de utilidad, GRATUITA!
