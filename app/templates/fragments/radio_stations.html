@@ -1,0 +1,13 @@
+<ul class="radio-list">
+    {% for station in stations %}
+    <li class="radio-item">
+        <span>{{ station.name }}</span>
+        <button class="play-btn"
+                onclick="openMediaModal('audio', '{{ station.stream_url }}', '{{ station.name }}')">
+            ▶️ Escuchar
+        </button>
+    </li>
+    {% else %}
+    <li class="list-item">No hay radios para esta región.</li>
+    {% endfor %}
+</ul>

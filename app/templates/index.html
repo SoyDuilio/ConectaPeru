@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section id="tv-section" class="card">
+    <h2>📺 Televisión en Vivo</h2>
+    <div id="tv-channels-list" hx-get="/api/tv-channels" hx-trigger="load" hx-swap="innerHTML">
+        <div class="loader">Cargando canales...</div>
+    </div>
+</section>
+
+<section id="radio-section" class="card">
+    <h2>📻 Radios de Iquitos</h2>
+    <div id="radio-stations-list" hx-get="/api/radios/iquitos" hx-trigger="load" hx-swap="innerHTML">
+        <div class="loader">Cargando estaciones...</div>
+    </div>
+</section>
+
+<section id="favorites-section" class="card">
+    <h2>⭐ Mis Favoritos</h2>
+    <div class="add-favorite">
+        <input id="favorite-url" type="url" placeholder="Pega una URL (YouTube, etc.)">
+        <button _="on click call addFavorite()">Agregar</button>
+    </div>
+    <ul id="favorites-list">
+        <!-- Los favoritos se cargarán aquí con JavaScript -->
+    </ul>
+</section>
+
+<section id="security-section" class="card soon">
+    <h2>🛡️ Seguridad y Utilidades</h2>
+    <div class="soon-feature">
+        <h3>Localizador de Dispositivo (GPS)</h3>
+        <p class="status">¡MUY PRONTO!</p>
+        <p class="description">Localiza tu dispositivo en caso de pérdida o robo.</p>
+    </div>
+    <div class="soon-feature">
+        <h3>Alertas de Sismos y Noticias</h3>
+        <p class="status">¡MUY PRONTO!</p>
+        <p class="description">Recibe notificaciones importantes de tu región.</p>
+    </div>
+</section>
+
+<script>
+    // --- Lógica para "Mis Favoritos" usando localStorage ---
+
+    const favoritesList = document.getElementById('favorites-list');
+    const favoriteUrlInput = document.getElementById('favorite-url');
+
+    // Cargar favoritos al iniciar la página
+    function loadFavorites() {
+        const favorites = JSON.parse(localStorage.getItem('peruConectadoFavorites')) || [];
+        favoritesList.innerHTML = '';
+        favorites.forEach(fav => {
+            addFavoriteToDOM(fav.url, fav.name);
+        });
+    }
+
+    // Añadir un favorito al DOM
+    function addFavoriteToDOM(url, name) {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+            <a href="${url}" target="_blank">${name}</a>
+            <button class="delete-btn" _="on click call removeFavorite('${url}')">X</button>
+        `;
+        favoritesList.appendChild(listItem);
+    }
+
+    // Función para agregar un nuevo favorito (llamada por Hyperscript)
+    function addFavorite() {
+        const url = favoriteUrlInput.value.trim();
+        if (url === '') return;
+
+        let name = new URL(url).hostname.replace('www.', ''); // Nombre simple por defecto
+        if (name.includes('youtube.com')) name = 'YouTube';
+        
+        const favorites = JSON.parse(localStorage.getItem('peruConectadoFavorites')) || [];
+        if (favorites.some(fav => fav.url === url)) {
+            alert('Este favorito ya existe.');
+            return;
+        }
+
+        favorites.push({ url, name });
+        localStorage.setItem('peruConectadoFavorites', JSON.stringify(favorites));
+        addFavoriteToDOM(url, name);
+        favoriteUrlInput.value = '';
+    }
+
+    // Función para eliminar un favorito (llamada por Hyperscript)
+    function removeFavorite(url) {
+        let favorites = JSON.parse(localStorage.getItem('peruConectadoFavorites')) || [];
+        favorites = favorites.filter(fav => fav.url !== url);
+        localStorage.setItem('peruConectadoFavorites', JSON.stringify(favorites));
+        loadFavorites(); // Recargar la lista
+    }
+
+    // Carga inicial
+    document.addEventListener('DOMContentLoaded', loadFavorites);
+</script>
+{% endblock %}

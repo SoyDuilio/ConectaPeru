@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perú Conectado</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="https://unpkg.com/htmx.org@1.9.10" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+</head>
+<body class="container">
+
+    <header>
+        <button id="theme-switcher" class="theme-switcher"></button>
+        <h1>Perú Conectado</h1>
+        <p>Tu centro de medios y utilidades</p>
+    </header>
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="footer-credits">
+            Desarrollado por <a href="https://duilio.store" target="_blank">Duilio</a>
+        </div>
+        <div class="footer-contact">
+            <a href="https://wa.me/51967317946?text=Hola,%20necesito%20soporte%20con%20la%20app%20Perú%20Conectado" target="_blank">Contactar por WhatsApp</a>
+        </div>
+    </footer>
+
+    <!-- Contenedor del Modal -->
+    <div id="media-modal" class="modal-overlay" _="on click from elsewhere remove .active">
+        <div class="modal-container" _="on click stop propagation">
+            <div class="modal-header">
+                <h3 id="modal-title">Cargando...</h3>
+                <button class="modal-close-btn" _="on click trigger click on #media-modal">×</button>
+            </div>
+            <div id="modal-content-container" class="modal-content">
+                <!-- El contenido se insertará aquí -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Lógica para abrir el modal (Función Global ) ---
+        function openMediaModal(type, url, title) {
+            const modal = document.getElementById('media-modal');
+            const titleElement = document.getElementById('modal-title');
+            const contentContainer = document.getElementById('modal-content-container');
+
+            titleElement.innerText = title;
+
+            if (type === 'video') {
+                contentContainer.innerHTML = `<iframe src="${url}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+            } else if (type === 'audio') {
+                // Para audio, reseteamos la altura del contenedor
+                contentContainer.style.paddingTop = '0';
+                contentContainer.style.height = '60px';
+                contentContainer.innerHTML = `<audio controls autoplay src="${url}"></audio>`;
+            }
+            
+            // Para video, aseguramos la proporción 16:9
+            if (type === 'video') {
+                contentContainer.style.paddingTop = '56.25%';
+                contentContainer.style.height = '0';
+            }
+
+            modal.classList.add('active');
+        }
+
+        // --- Lógica para el cambio de tema ---
+        const themeSwitcher = document.getElementById('theme-switcher');
+        const body = document.body;
+
+        function setIcon(theme) {
+            themeSwitcher.innerHTML = theme === 'dark' ? '☀️' : '🌙';
+        }
+
+        function applyTheme(theme) {
+            body.setAttribute('data-theme', theme);
+            localStorage.setItem('peruConectadoTheme', theme);
+            setIcon(theme);
+        }
+
+        themeSwitcher.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            applyTheme(newTheme);
+        });
+
+        const savedTheme = localStorage.getItem('peruConectadoTheme') || 'dark';
+        applyTheme(savedTheme);
+    </script>
+</body>
+</html>

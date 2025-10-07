@@ -1,0 +1,391 @@
+/* =================================
+   DISEÑO CON TEMAS (OSCURO Y DÍA)
+   ================================= */
+
+/* --- Tema "Día" (Gris Claro) - Por defecto --- */
+:root, [data-theme="light"] {
+    --primary-bg: #DDE1E7;      /* Fondo principal gris claro */
+    --card-bg: #FFFFFF;         /* Tarjetas blancas */
+    --text-color: #1C1E21;      /* Texto oscuro */
+    --text-secondary: #606770;  /* Texto secundario */
+    --accent-color: #1877F2;    /* Azul Facebook */
+    --success-color: #42B72A;   /* Verde Facebook */
+    --danger-color: #FA383E;    /* Rojo */
+    --border-color: #CED0D4;    /* Bordes */
+    --border-radius: 12px;
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Tema "Noche" (Oscuro) --- */
+[data-theme="dark"] {
+    --primary-bg: #121212;
+    --card-bg: #1E1E1E;
+    --text-color: #E0E0E0;
+    --text-secondary: #A0A0A0;
+    --accent-color: #3498DB;
+    --success-color: #2ECC71;
+    --danger-color: #E74C3C;
+    --border-color: #3A3B3C;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* --- Estilos Generales (usan las variables) --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    margin: 0;
+    padding: 1rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.container { max-width: 600px; margin: 0 auto; }
+
+header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+header h1 { margin: 0; font-size: 2.2rem; font-weight: 700; }
+header p { margin-top: 0.25rem; color: var(--text-secondary); font-size: 1rem; }
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.card h2 {
+    margin-top: 0;
+    font-size: 1.4rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+/* --- CORRECCIÓN: Lista de Radios --- */
+.radio-list { list-style: none; padding: 0; margin: 0; }
+.radio-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 0.25rem;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s ease;
+}
+.radio-item:hover { background-color: rgba(0,0,0,0.05); }
+[data-theme="dark"] .radio-item:hover { background-color: #252525; }
+.radio-item:last-child { border-bottom: none; }
+.radio-item span { flex-grow: 1; } /* El texto ocupa el espacio disponible */
+.play-btn {
+    flex-shrink: 0; /* Evita que el botón se encoja */
+    margin-left: 1rem; /* Añade espacio entre el texto y el botón */
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+/* --- Botón para cambiar tema --- */
+.theme-switcher {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* El resto de los estilos (modal, favoritos, etc.) permanecen igual */
+/* ... (pegar el resto del CSS del mensaje anterior aquí) ... */
+
+
+
+/* =================================
+   NUEVO TEMA OSCURO Y DISEÑO REFINADO
+   ================================= */
+
+/* --- Paleta de Colores --- */
+
+.loader {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* --- Estilos para TV y Radio --- */
+.media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+}
+
+.media-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #282828;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.media-item:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-color);
+}
+
+.radio-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.radio-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 0.25rem;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s ease;
+}
+.radio-item:hover {
+    background-color: #252525;
+}
+
+.radio-item:last-child {
+    border-bottom: none;
+}
+
+.play-btn {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+/* --- Estilos para Favoritos --- */
+.add-favorite {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.add-favorite input {
+    flex-grow: 1;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #282828;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.add-favorite button {
+    background-color: var(--success-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#favorites-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0.25rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#favorites-list a {
+    color: var(--accent-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80%;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: var(--danger-color);
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* --- Estilos para secciones "Muy Pronto" --- */
+.soon-feature {
+    background-color: rgba(0,0,0,0.2);
+    border: 1px dashed var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.soon-feature .status {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+/* --- Estilos para el MODAL --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-container {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-container {
+    transform: scale(1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.modal-content {
+    position: relative;
+    padding-top: 56.25%; /* Proporción 16:9 para video */
+    height: 0;
+    overflow: hidden;
+}
+
+.modal-content iframe,
+.modal-content audio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.modal-content audio {
+    height: 60px; /* Altura para el reproductor de audio */
+    padding-top: 0;
+}
+
+
+/* ... (pega esto al final de tu archivo CSS existente) ... */
+
+/* --- REGLAS ADICIONALES Y CORRECCIONES --- */
+
+/* Mejorar contraste de enlaces en tema oscuro */
+[data-theme="dark"] a {
+    color: var(--accent-color); /* Usa el color de acento principal */
+}
+
+/* Estilos para el Footer */
+footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-credits {
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.footer-contact a {
+    display: inline-block;
+    background-color: #25D366; /* Color de WhatsApp */
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: transform 0.2s;
+}
+
+.footer-contact a:hover {
+    transform: scale(1.05);
+}
+
+/* Ajuste para el contenido del modal de audio */
+.modal-content iframe,
+.modal-content audio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
