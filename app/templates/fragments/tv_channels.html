@@ -1,5 +1,6 @@
 <div class="media-grid">
     {% for channel in channels %}
+    <!-- CORRECCIÓN: Se pasan los valores como strings literales a la función. -->
     <div class="media-item" 
          onclick="openMediaModal('video', '{{ channel.stream_url }}', '{{ channel.name }}')">
         <span>{{ channel.name }}</span>
