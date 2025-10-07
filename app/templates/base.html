@@ -30,11 +30,14 @@
     </footer>
 
     <!-- Contenedor del Modal -->
-    <div id="media-modal" class="modal-overlay" _="on click from elsewhere remove .active">
-        <div class="modal-container" _="on click stop propagation">
+    <!-- CAMBIO: Eliminado el Hyperscript del overlay para evitar errores de propagación. -->
+    <div id="media-modal" class="modal-overlay">
+        <!-- CAMBIO: El contenedor del modal ya no necesita detener la propagación. -->
+        <div class="modal-container">
             <div class="modal-header">
                 <h3 id="modal-title">Cargando...</h3>
-                <button class="modal-close-btn" _="on click trigger click on #media-modal">×</button>
+                <!-- CAMBIO: El botón de cierre ahora es el único responsable de cerrar el modal. -->
+                <button class="modal-close-btn" _="on click remove .active from #media-modal">×</button>
             </div>
             <div id="modal-content-container" class="modal-content">
                 <!-- El contenido se insertará aquí -->
@@ -52,15 +55,14 @@
             titleElement.innerText = title;
 
             if (type === 'video') {
+                // CAMBIO: Añadido allow="fullscreen" para solucionar la advertencia de la consola.
                 contentContainer.innerHTML = `<iframe src="${url}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
             } else if (type === 'audio') {
-                // Para audio, reseteamos la altura del contenedor
                 contentContainer.style.paddingTop = '0';
                 contentContainer.style.height = '60px';
                 contentContainer.innerHTML = `<audio controls autoplay src="${url}"></audio>`;
             }
             
-            // Para video, aseguramos la proporción 16:9
             if (type === 'video') {
                 contentContainer.style.paddingTop = '56.25%';
                 contentContainer.style.height = '0';
@@ -69,7 +71,7 @@
             modal.classList.add('active');
         }
 
-        // --- Lógica para el cambio de tema ---
+        // --- Lógica para el cambio de tema (sin cambios) ---
         const themeSwitcher = document.getElementById('theme-switcher');
         const body = document.body;
 
